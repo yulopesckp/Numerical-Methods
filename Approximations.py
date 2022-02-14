@@ -289,7 +289,7 @@ def Runge_Kutta4(func, y0, x0, b, n):
 if __name__ == '__main__':
     ##################################
     ##parte para integração numérica##
-    n0 = 100000
+    n0 = 1000
     a = 0
     b = 1
     ##############################################
@@ -301,26 +301,23 @@ if __name__ == '__main__':
     b1 = 1
     ##############################################
 
-
     E = Euler_Method(func, 1, 0, b1, n1)
     A = Adam_Method(func, 1, 0, b1, n1)
     RK4 = Runge_Kutta4(func, 1, 0, b1, n1)
 
     s = 2*(np.exp(1)-1)
 
-    #print("1° método, por Soma de Riemann: " + str(Riemann_Int(a,b,f,n)) + ", para n = " + str(n) + " de precisão")
-    #print("2° método, por Trapézio: " + str(Trap_Int(a,b,f,n)) + ", para n = " + str(n) + " de precisão")
-    #print("3° método, pela Regra de Simpson: " + str(Simpson_Rule(a,b,f,n)) + ", para n = " + str(n) + "  precisão")
+    print("1° método, por Soma de Riemann: " + str(Riemann_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
+    print("2° método, por Trapézio: " + str(Trap_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
+    print("3° método, pela Regra de Simpson: " + str(Simpson_Rule(a,b,f,n0)) + ", para n = " + str(n0) + "  precisão")
     #print("4° método, pelo método de Monte Carlo: " + str(MonteCarlo(a,b,f,n)) + ", para n = " + str(n) + "  precisão")
     #print("5° método, pelo método de Monte Carlo com a média das respostas: " + str(MonteCarlo2(a,b,f,n)))
     #print("Pelo método das secantes, a raíz da equação é: " + str(secant(a,b,f,n)))
-    #print("Pelo método de Euler, o resultado é " + str(E))
-    #print("Pelo método de Adam, o resultado é " + str(A))
-    #print("Pelo método de Runge-Kutta de 4° ordem, " + str(RK4))
-    #print("Solução para y = 1 da EDO de teste: " + str(s))
 
     name = ["Euler", "Adam", "Runge-Kutta de 4° ordem"]
     sn = [E, A, RK4]
 
     for i in range(len(name)):
         print("A diferença no método de " + name[i] + ", valendo " + str(sn[i]) + ", é de " + str(abs(sn[i] - s)) + ", com " + str(n1) + " iterações.")
+
+
