@@ -310,9 +310,9 @@ if __name__ == '__main__':
     print("1° método, por Soma de Riemann: " + str(Riemann_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
     print("2° método, por Trapézio: " + str(Trap_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
     print("3° método, pela Regra de Simpson: " + str(Simpson_Rule(a,b,f,n0)) + ", para n = " + str(n0) + "  precisão")
-    #print("4° método, pelo método de Monte Carlo: " + str(MonteCarlo(a,b,f,n)) + ", para n = " + str(n) + "  precisão")
-    #print("5° método, pelo método de Monte Carlo com a média das respostas: " + str(MonteCarlo2(a,b,f,n)))
-    #print("Pelo método das secantes, a raíz da equação é: " + str(secant(a,b,f,n)))
+    #print("4° método, pelo método de Monte Carlo: " + str(MonteCarlo(a,b,f,n0)) + ", para n = " + str(n) + "  precisão")
+    #print("5° método, pelo método de Monte Carlo com a média das respostas: " + str(MonteCarlo2(a,b,f,n0)))
+    #print("Pelo método das secantes, a raíz da equação é: " + str(secant(a,b,f,n0)))
 
     name = ["Euler", "Adam", "Runge-Kutta de 4° ordem"]
     sn = [E, A, RK4]
