@@ -11,7 +11,7 @@ def f(x):
 
 
 def func(x, y):
-    return x+y
+    return y + x
 
 
 
@@ -267,14 +267,28 @@ def Adam_Method(func, y0, x0, b, n):
 
 
 
+def Runge_Kutta2(func, y0, x0, b, n):
+    h = (b - x0)/n
+    x = x0
+    y = y0
+    for i in range(n):
+        k1 = func(x,y)
+        k2 = func(x+h,  y+h*k1)
+         
+        y = y + (h/2)*(k1+k2)
+        x += h
+        
+    return y
+
+
+
 def Runge_Kutta4(func, y0, x0, b, n):
     h = (b - x0)/n
     x = x0
     y = y0
-    i = 0
     for i in range(n):
         k1 = h*func(x,y)
-        k2 = h*func(x+(h/2),  y+(h/2))
+        k2 = h*func(x+(h/2),  y+(k1/2))
         k3 = h*func(x+(h/2), y+(k2/2))
         k4 = h*func(x+(h), y+k3)
          
@@ -287,9 +301,12 @@ def Runge_Kutta4(func, y0, x0, b, n):
 
 ##Test##
 if __name__ == '__main__':
+    
+    start_time = time.time()
+    
     ##################################
     ##parte para integração numérica##
-    n0 = 1000
+    n0 = 10000
     a = 0
     b = 1
     ##############################################
@@ -303,19 +320,32 @@ if __name__ == '__main__':
 
     E = Euler_Method(func, 1, 0, b1, n1)
     A = Adam_Method(func, 1, 0, b1, n1)
+    RK2 = Runge_Kutta2(func, 1, 0, b1, n1)
     RK4 = Runge_Kutta4(func, 1, 0, b1, n1)
 
-    s = 2*(np.exp(1)-1)
+    s = 2*(np.exp(1) - 1)
 
-    print("1° método, por Soma de Riemann: " + str(Riemann_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
-    print("2° método, por Trapézio: " + str(Trap_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
-    print("3° método, pela Regra de Simpson: " + str(Simpson_Rule(a,b,f,n0)) + ", para n = " + str(n0) + "  precisão")
-    print("4° método, pelo método de Monte Carlo: " + str(MonteCarlo(a,b,f,n0)) + ", para n = " + str(n0) + "  precisão")
+    #print("1° método, por Soma de Riemann: " + str(Riemann_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
+    #print("2° método, por Trapézio: " + str(Trap_Int(a,b,f,n0)) + ", para n = " + str(n0) + " de precisão")
+    #print("3° método, pela Regra de Simpson: " + str(Simpson_Rule(a,b,f,n0)) + ", para n = " + str(n0) + "  precisão")
+    #print("4° método, pelo método de Monte Carlo: " + str(MonteCarlo(a,b,f,n0)) + ", para n = " + str(n0) + "  precisão")
     #print("5° método, pelo método de Monte Carlo com a média das respostas: " + str(MonteCarlo2(a,b,f,n0)))
     #print("Pelo método das secantes, a raíz da equação é: " + str(secant(a,b,f,n0)))
 
-    name = ["Euler", "Adam", "Runge-Kutta de 4° ordem"]
-    sn = [E, A, RK4]
+    name = ["Euler", "Adam", "Runge-Kutta de 2 ° ordem" ,"Runge-Kutta de 4° ordem"]
+    sn = [E, A, RK2, RK4]
+    
+    m = []
 
     for i in range(len(name)):
+        
+        m.append(abs(sn[i] - s))
         print("A diferença no método de " + name[i] + ", valendo " + str(sn[i]) + ", é de " + str(abs(sn[i] - s)) + ", com " + str(n1) + " iterações.")
+    
+    
+    index = m.index(min(m))
+    print("A menor diferença entre é para o método de " + str(name[index]) + ", valendo " + str(sn[index]) + " com diferença de " + str(m[index]) + ", com " + str(n1) + " iterações.")
+    print("--- %s seconds ---" % (time.time() - start_time))
+    
+    
+    
