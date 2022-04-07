@@ -1,35 +1,31 @@
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
+from scipy import linalg
 
 def func1(x,y):
     return 10*(x-1)
 
-def first_order(func, y0, x0, b, h):
-    n =  round((b-x0)/h) + 1
-    x = np.zeros(n)
-    x[0] = x0
+def first_order(func, y0, yf, x0, b, n):
+    #n =  round((b-x0)/h) + 1
+    h = (b-x0)/(n-1)
     y = np.zeros(n)
     y[0] = y0
     m = np.zeros((n, n))
-    m[0,0] = 1
-    
-    for i in range(1, n):
-        for j in range(n):
-            
-            if i == j:
-                m[i, j] = -1
-                m[i, j+1] = 1
-    
-    for i in range(1, n):
-        
-        x[i] = x0 + i*h
+    m[0, 0] = 1
+    x = np.linspace(x0, b, n)
+
+    for i in range(1, n-1):
+        m[i, i+1] = 1
+        m[i, i] = -1
         y[i] = h*func(x[i], y[i])
-        
-    f = np.linalg.solve(m, y)
-    y[-1] = 
+    
+    m[-1, -1] = 1
+    y[-1] = yf
+    f = linalg.solve(m, y)
+    
     print(f)
     print(x)
-    print(y)
+    #print(y)
     
     plt.style.use('dark_background')
     plt.xlabel("x")
@@ -37,7 +33,8 @@ def first_order(func, y0, x0, b, h):
     plt.plot(x, f, 'bo--')
     plt.grid()
     plt.show()
+    print(np.dot(m, y) == f)
     return None
 
 
-first_order(func1, 0, 0, 5, 0.5)
+first_order(func1, 5, 1, 0, 1, 11)
