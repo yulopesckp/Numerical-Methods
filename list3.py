@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+#from scipy import linalg
 
 
 def func1(x, y):
@@ -19,13 +19,12 @@ def first_order(func, f_anal, y0, yf, x0, b, n):
     h = (b-x0)/(n)
     h /= 2
     y = np.zeros(n)
-    y[0] = y0 - 1 
-    y[-1] = yf
     A = np.zeros((n, n))
     x = np.linspace(x0, b, n)
     A[0, 0] = (2*h*(x[0]**3-1.5)+1)
     A[0, 1] = -1
-
+    y[0] = y0 - (2*h*(x[0]**3-1.5)+1)
+    y[-1] = yf 
 
     for i in range(1, n-1):
 
