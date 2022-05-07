@@ -19,7 +19,7 @@ def first_order(func, f_anal, y0, yf, x0, b, n):
     h = (b-x0)/(n)
     h /= 2
     y = np.zeros(n)
-    y[0] = y0
+    y[0] = y0 - 1 
     y[-1] = yf
     A = np.zeros((n, n))
     x = np.linspace(x0, b, n)
