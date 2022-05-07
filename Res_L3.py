@@ -42,11 +42,12 @@ def first_order(func, fc, M, y0, yf, x0, b, n):
     f = np.matmul(np.linalg.inv(A), B)
     v = np.linspace(x0, b, 1000)
     h = fc(v)
+    plt.figure(dpi = 1200)
     plt.plot(v, h, 'r', label = "Solução analítica")
     plt.style.use('dark_background')
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.plot(x, f, 'bo--', label = "Método de Diferenças finitas para " + str(n) + " pontos.")
+    plt.plot(x, f, 'b.--', label = "Método de Diferenças finitas para " + str(n) + " pontos.")
     plt.legend(loc = "upper center")
     plt.grid()
     plt.show()
@@ -55,12 +56,12 @@ def first_order(func, fc, M, y0, yf, x0, b, n):
 
 
 def main():
-    t1 = 10
     
+    t1 = 10
     func1 = lambda x, y : y*(x**3-1.5)
     fc = lambda x : np.exp((x**4)/4 - 1.5*x)
     
-    for i in range(3):
+    for i in range(1):
         
         inicio = time.time()
         first_order(func1, fc, M, 1, 2.72, 0, 2, t1)
