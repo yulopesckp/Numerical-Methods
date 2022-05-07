@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import time
 
 
 def func1(x,y):
@@ -21,43 +21,50 @@ def M(n):
         A[i, i+1]= 1
         
     A[-1,-1] = 1
+    
+    #if np.linalg.det(A) == 0:
+     #   print("obs .: determinante = 0")
+    
     return A
 
     
     
 def first_order(func, fc, M, y0, yf, x0, b, n):
     
+    if (n%2) == 1:
+        n = n+1
+    
     h = (b-x0)/(n)
     B = np.zeros(n)
     y = np.zeros(n)
-    y[0] = y0
-    y[-1] = yf
+    B[0] = y0
+    B[-1] = yf
     A = np.zeros((n, n))
     x = np.linspace(x0, b, n)
     A = M(n)
-    print(y)
+    #print(y)
     
-    for j in range(2*n - 1):
+    for j in range(5*n):
             
         for i in range(1, n-1):
             B[i] = 2*h*func(x[i],y[i])
-            print(B[i])
+            #print(B[i])
         
+        #print(B)
         f = np.linalg.solve(A, B)
-        print(f)
-        print(y)
+        #print(f)
         y = f
-        print(y)
+        #print(y)
     
-    f = np.linalg.solve(A, B)
+    #f = np.linalg.solve(A, B)
     v = np.linspace(x0, b, 1000)
     h = fc(v)
-    plt.plot(v, h, 'g', label = "Solução analítica")
+    plt.plot(v, h, 'r', label = "Solução analítica")
     plt.style.use('dark_background')
     plt.xlabel("x")
     plt.ylabel("y")
     plt.plot(x, f, 'bo--', label = "Método de Diferenças finitas para " + str(n) + " pontos.")
-    #plt.legend(loc = "upper center")
+    plt.legend(loc = "upper center")
     plt.grid()
     plt.show()
     
@@ -66,12 +73,16 @@ def first_order(func, fc, M, y0, yf, x0, b, n):
 
 
 def main():
-    t1 = 5 
+    t1 = 10
     
-    for i in range(1):
+    for i in range(3):
+        
+        inicio = time.time()
         first_order(func1, fc, M, 1, 2.72, 0, 2, t1)
-        #t1 *= 10
-
+        fim = time.time()
+        print("Para " + str(t1) + " iterações, " + " t = " + str(fim - inicio) + " segundos.")
+        t1 *= 10
+    
 
 if __name__ == '__main__':
     main()
