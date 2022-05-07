@@ -3,14 +3,6 @@ import matplotlib.pyplot as plt
 import time
 
 
-def func1(x,y):
-    return y*(x**3-1.5)
-
-
-def fc(x):
-    return np.exp((x**4)/4 - 1.5*x)
-
-
 def M(n):
     
     A = np.zeros((n, n))
@@ -22,12 +14,8 @@ def M(n):
         
     A[-1,-1] = 1
     
-    #if np.linalg.det(A) == 0:
-     #   print("obs .: determinante = 0")
-    
     return A
 
-    
     
 def first_order(func, fc, M, y0, yf, x0, b, n):
     
@@ -42,21 +30,16 @@ def first_order(func, fc, M, y0, yf, x0, b, n):
     A = np.zeros((n, n))
     x = np.linspace(x0, b, n)
     A = M(n)
-    #print(y)
     
-    for j in range(5*n):
+    for j in range(10*n):
             
         for i in range(1, n-1):
             B[i] = 2*h*func(x[i],y[i])
-            #print(B[i])
-        
-        #print(B)
+            
         f = np.linalg.solve(A, B)
-        #print(f)
         y = f
-        #print(y)
     
-    #f = np.linalg.solve(A, B)
+    f = np.matmul(np.linalg.inv(A), B)
     v = np.linspace(x0, b, 1000)
     h = fc(v)
     plt.plot(v, h, 'r', label = "Solução analítica")
@@ -68,12 +51,14 @@ def first_order(func, fc, M, y0, yf, x0, b, n):
     plt.grid()
     plt.show()
     
-    
     return None
 
 
 def main():
     t1 = 10
+    
+    func1 = lambda x, y : y*(x**3-1.5)
+    fc = lambda x : np.exp((x**4)/4 - 1.5*x)
     
     for i in range(3):
         
