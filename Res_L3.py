@@ -55,14 +55,14 @@ def first_order(func, fc, M, y0, yf, x0, b, n):
 
 def main():
     
-    t1 = 10
+    n = 10
     func1 = lambda x, y : y*(x**3-1.5)
     fc = lambda x : np.exp((x**4)/4 - 1.5*x)
     
     for i in range(3):
         
-        first_order(func1, fc, M, 1, 2.72, 0, 2, t1)
-        t1 *= 10
+        first_order(func1, fc, M, 1, 2.72, 0, 2, n)
+        n *= 10
     
 
 if __name__ == '__main__':
