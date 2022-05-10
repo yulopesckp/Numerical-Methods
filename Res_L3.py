@@ -30,7 +30,7 @@ def first_order(func, fc, M, y0, yf, x0, b, n):
     x = np.linspace(x0, b, n)
     A = M(n)
     
-    for j in range(5*n):
+    for j in range(1000):
             
         for i in range(1, n-1):
             B[i] = 2*h*func(x[i],y[i])
